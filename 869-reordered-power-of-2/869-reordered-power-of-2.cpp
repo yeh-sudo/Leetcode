@@ -6,14 +6,11 @@ public:
         do {
             if (s[0] == '0') continue;
             int tmp = stoi(s);
-            int cnt = 0;
-            while (tmp != 0){
-                if (tmp & 1){
-                    cnt++;
-                }
-                tmp >>= 1;
+            double k = log2(tmp);
+            int t = k;
+            if (k == t){
+                return 1;
             }
-            if (cnt == 1) return 1;
         } while (next_permutation(s.begin(), s.end()));
         return 0;
     }
