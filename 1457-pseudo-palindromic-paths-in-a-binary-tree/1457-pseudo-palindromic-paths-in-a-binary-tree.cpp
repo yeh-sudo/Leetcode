@@ -11,7 +11,7 @@
  */
 class Solution {
     int ans = 0;
-    bool valid(vector<int> v){
+    bool valid(vector<int>& v){
         int odd = 0;
         for (int i = 1; i < 10; i++){
             if (v[i] % 2 == 1) odd++;
@@ -21,7 +21,7 @@ class Solution {
         }
         return 1;
     }
-    void dfs(vector<int> v, TreeNode* node){
+    void dfs(vector<int>& v, TreeNode* node){
         if (!node->left && !node->right){
             if (valid(v)) ans++;
             return;
