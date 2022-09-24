@@ -11,11 +11,12 @@
  */
 class Solution {
     vector<vector<int>> ans;
-    void dfs(vector<int> v, TreeNode* node, int targetSum, int sum){
+    void dfs(vector<int>& v, TreeNode* node, int targetSum, int sum){
         if (!node->left && !node->right){
             if (sum + node->val == targetSum){
                 v.push_back(node->val);
                 ans.push_back(v);
+                v.pop_back();
                 return;
             }
         }
