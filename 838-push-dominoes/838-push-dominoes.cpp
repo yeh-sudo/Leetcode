@@ -1,72 +1,50 @@
 class Solution {
 public:
     string pushDominoes(string dominoes) {
-        vector<int> R, L;
-        vector<char> tmp(dominoes.size(), 'x');
-        for (int i = 0; i < dominoes.size(); i++){
+        int n = dominoes.size();
+        vector<int> r(n), l(n);
+        int f = 0;
+        for (int i = 0; i < n; i++){
             if (dominoes[i] == 'R'){
-                R.push_back(i);
+                f = n;
+                r[i] = f;
+                f--;
             }
-            else if (dominoes[i] == 'L'){
-                L.push_back(i);
-            }
-        }
-        for (int i = 0; i < R.size(); i++){
-            int idx = upper_bound(L.begin(), L.end(), R[i]) - L.begin();
-            if (idx == L.size()) continue;
-            if (i != R.size() - 1 && R[i+1] < L[idx]) continue;
-            int num = L[idx] - R[i] + 1;
-            int mid = (R[i] + L[idx]) / 2;
-            if (num % 2 != 0)
-                tmp[mid] = '.';
-            else
-                tmp[mid] = 'r';
-        }
-        bool c = 0;
-        for (int i = 0; i < dominoes.size(); i++){
-            if (c){
-                if (tmp[i] == '.'){
-                    c = 0;
-                }
-                else if (tmp[i] == 'r'){
-                    c = 0;
-                    tmp[i] = 'R';
-                }
-                else if (dominoes[i] == 'L'){
-                    c = 0;
-                }
-                else {
-                    tmp[i] = 'R';
-                }
+            else if (dominoes[i] == '.'){
+                r[i] = f;
+                f = (f - 1 <= 0 ? 0 : f-1);
             }
             else {
-                if (dominoes[i] == 'R'){
-                    c = 1;
-                    tmp[i] = 'R';
-                }
+                r[i] = 0;
+                f = 0;
             }
         }
-        c = 0;
-        for (int i = dominoes.size() - 1; i >= 0; i--){
-            if (c){
-                if (tmp[i] == 'R' || tmp[i] == '.'){
-                    c = 0;
-                }
-                else {
-                    tmp[i] = 'L';
-                }
+        for (int i = n - 1; i >= 0; i--){
+            if (dominoes[i] == 'L'){
+                f = n;
+                l[i] = f;
+                f--;
+            }
+            else if (dominoes[i] == '.'){
+                l[i] = f;
+                f = (f - 1 <= 0 ? 0 : f-1);
             }
             else {
-                if (dominoes[i] == 'L'){
-                    c = 1;
-                    tmp[i] = 'L';
-                }
+                l[i] = 0;
+                f = 0;
             }
         }
         string ans = "";
-        for (int i = 0; i < tmp.size(); i++){
-            if (tmp[i] == 'x') ans += '.';
-            else ans += tmp[i];
+        for (int i = 0; i < n; i++){
+            if (r[i] - l[i] > 0){
+                ans += 'R';
+            }
+            else if (r[i] - l[i] < 0){
+                ans += 'L';
+            }
+            else {
+                ans += '.';
+            }
         }
         return ans;
     }
