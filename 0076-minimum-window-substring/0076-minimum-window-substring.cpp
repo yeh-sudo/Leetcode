@@ -56,9 +56,7 @@ public:
                     r++;
                 }
             }
-            // cout << l << ' ' << r << ' ' << s.substr(l, r - l) << ' ' << valid << '\n';
         }
-        // cout << ansL << ' ' << ansR;
         if (ansL == -1 || ansL == -1){
             return "";
         }
