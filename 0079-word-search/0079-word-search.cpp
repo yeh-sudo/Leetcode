@@ -36,6 +36,9 @@ public:
     bool exist(vector<vector<char>>& board, string word) {
         for (int i = 0; i < board.size(); i++){
             for (int j = 0; j < board[i].size(); j++){
+                if (board[i][j] != word[0]){
+                    continue;
+                }
                 memset(isvi, 0, sizeof(isvi));
                 string str = "";
                 str += board[i][j];
