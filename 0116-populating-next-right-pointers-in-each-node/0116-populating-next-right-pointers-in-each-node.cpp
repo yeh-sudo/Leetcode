@@ -19,26 +19,15 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if (root == NULL){
-            return root;
-        }
-        queue<pair<int, Node*>> q;
-        q.push({0, root});
-        while (!q.empty()){
-            pair<int, Node*> cur = q.front();
-            q.pop();
-            if (q.empty() || q.front().first != cur.first){
-                cur.second->next = NULL;
-            } else {
-                cur.second->next = q.front().second;
-            }
-            if (cur.second->left != NULL){
-                q.push({cur.first + 1, cur.second->left});
-            }
-            if (cur.second->right != NULL){
-                q.push({cur.first + 1, cur.second->right});
-            }
-        }
-        return root;
+        auto head = root;
+        for(; root; root = root -> left) 
+            for(auto cur = root; cur; cur = cur -> next)   // traverse each level - it's just BFS taking advantage of next pointers          
+                if(cur -> left) {                          // update next pointers of children if they exist               
+                    cur -> left -> next = cur -> right;
+                    if(cur -> next) cur -> right -> next = cur -> next -> left;
+                }
+                else break;                                // if no children exist, stop iteration                                                  
+        
+        return head;
     }
 };
